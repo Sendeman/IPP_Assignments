@@ -1,0 +1,72 @@
+T=1, N=1
+Finished in 0.911589 seconds (wall clock).
+T=1, N=2
+Finished in 1.82441 seconds (wall clock).
+T=1, N=4
+Finished in 3.65133 seconds (wall clock).
+T=1, N=8
+Finished in 7.30374 seconds (wall clock).
+T=1, N=16
+Finished in 14.549 seconds (wall clock).
+T=1, N=32
+Finished in 29.1169 seconds (wall clock).
+T=2, N=1
+Finished in 0.457467 seconds (wall clock).
+T=2, N=2
+Finished in 0.913486 seconds (wall clock).
+T=2, N=4
+Finished in 1.82947 seconds (wall clock).
+T=2, N=8
+Finished in 3.65964 seconds (wall clock).
+T=2, N=16
+Finished in 7.319 seconds (wall clock).
+T=2, N=32
+Finished in 14.6192 seconds (wall clock).
+T=4, N=1
+Finished in 0.22954 seconds (wall clock).
+T=4, N=2
+Finished in 0.458492 seconds (wall clock).
+T=4, N=4
+Finished in 0.91651 seconds (wall clock).
+T=4, N=8
+Finished in 1.83191 seconds (wall clock).
+T=4, N=16
+Finished in 3.66919 seconds (wall clock).
+T=4, N=32
+Finished in 7.34396 seconds (wall clock).
+T=8, N=1
+Finished in 0.115827 seconds (wall clock).
+T=8, N=2
+Finished in 0.231393 seconds (wall clock).
+T=8, N=4
+Finished in 0.462076 seconds (wall clock).
+T=8, N=8
+Finished in 0.922821 seconds (wall clock).
+T=8, N=16
+Finished in 1.84859 seconds (wall clock).
+T=8, N=32
+Finished in 3.69955 seconds (wall clock).
+T=16, N=1
+Finished in 0.0590134 seconds (wall clock).
+T=16, N=2
+Finished in 0.117522 seconds (wall clock).
+T=16, N=4
+Finished in 0.234467 seconds (wall clock).
+T=16, N=8
+Finished in 0.468429 seconds (wall clock).
+T=16, N=16
+Finished in 0.936319 seconds (wall clock).
+T=16, N=32
+Finished in 1.87369 seconds (wall clock).
+T=32, N=1
+Finished in 0.0334449 seconds (wall clock).
+T=32, N=2
+Finished in 0.0656911 seconds (wall clock).
+T=32, N=4
+Finished in 0.13084 seconds (wall clock).
+T=32, N=8
+Finished in 0.260272 seconds (wall clock).
+T=32, N=16
+Finished in 0.520021 seconds (wall clock).
+T=32, N=32
+Finished in 1.04055 seconds (wall clock).
