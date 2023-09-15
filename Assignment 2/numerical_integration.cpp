@@ -7,10 +7,11 @@
 #include <condition_variable>
 #include <thread>
 #include <numeric>
+#include <chrono>
 
 void usage(char *program)
 {
-  std::cout << "Usage: " << program << " N  (where 2<=N<=10)" << std::endl;
+  std::cout << "Usage: " << program << " [number_of_trapezoids] [number_of_threads] " << std::endl;
   exit(1);
 }
 
@@ -25,12 +26,18 @@ void trapArea(int i, float start, float stepsize, float *result, bool *flag)
   float b = start + (i + 1) * stepsize;
   *result = (func(a) + func(b)) * ((b - a) / 2);
   *flag = false;
+  // std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
 
 int main(int argc, char *argv[])
 {
-  int n = 5;
-  int threadCount = 2;
+  if (argc == 2 && (std::string(argv[1]) == "-h"))
+  {
+    usage(argv[0]);
+  }
+
+  int n = std::stoi(argv[1]);
+  int threadCount = std::stoi(argv[2]);
   bool flags[threadCount];
   std::thread *threads = new std::thread[threadCount];
 
@@ -40,34 +47,43 @@ int main(int argc, char *argv[])
 
   float values[n];
 
-  bool assigned;
-  for (int i = 0; i < n; i++)
+  int i = 0;
+  auto start_time = std::chrono::system_clock::now();
+  while (i < n)
   {
-    while (!assigned) // while the index is not assigned
+    for (int t = 0; t < threadCount; t++) // loop over all threads
     {
-      for (int t = 0; t < threadCount; t++) // loop over all threads
+      if (!flags[t]) // assign if available
       {
-        if (!flags[t]) // assign if available
-        {
-          flags[t] = true;
-          threads[t] = std::thread(&trapArea, i, startx, stepsize, &values[i], &flags[t]);
-          assigned = true;
-
-          std::cout << "index " << i << "assigned to thread "<< t << std::endl;
-
+        if (threads[t].joinable())
+        { // #https://stackoverflow.com/questions/42692538/c-thread-still-joinable-after-it-finishes-execution
+          threads[t].join();
         }
+
+        flags[t] = true;
+        threads[t] = std::thread(&trapArea, i, startx, stepsize, &values[i], &flags[t]);
+        // std::cout << "index " << i << " assigned to thread " << t << std::endl;
+
+        i++;
+        // if (i<n){break;}
+      }
+      else
+      {
+        // std::cout << "thread unavailable" << std::endl;
       }
     }
-
-    // std::cout << a << " " << b << " " << values[i] << std::endl;
   }
 
   for (int t = 0; t < threadCount; t++) // wait for threads to finish
   {
     threads[t].join();
   }
+  auto break_point = std::chrono::system_clock::now();
 
   float totalArea = 0;
   totalArea = std::accumulate(values, values + n, totalArea);
-  std::cout << totalArea << std::endl;
+  auto end_time = std::chrono::system_clock::now();
+  
+  std::cout << "AUC: " << totalArea << std::endl;
+  std::cout << "thread time " << (break_point - start_time).count() << " sum time " << (end_time - break_point).count() << std::endl;
 }
