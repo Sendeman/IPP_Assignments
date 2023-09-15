@@ -3,6 +3,10 @@
 #include <random>
 #include <sstream>
 #include <string>
+#include <mutex>
+#include <condition_variable>
+#include <thread>
+#include <numeric>
 
 void usage(char *program)
 {
@@ -10,38 +14,43 @@ void usage(char *program)
   exit(1);
 }
 
-float func(float x){
-  return 4/(1+pow(x, 2));
+float func(float x)
+{
+  return 4 / (1 + pow(x, 2));
 }
 
-float trapArea(float a, float b){
-  return (func(a) + func(b))*((b-a)/2);
+void trapArea(int i, float start, float stepsize, float *result)
+{
+  float a = start + i * stepsize;
+  float b = start + (i + 1) * stepsize;
+  *result = (func(a) + func(b)) * ((b - a) / 2);
 }
 
 int main(int argc, char *argv[])
 {
+  int n = 20;
+  int threadCount = 5;
+  
   float startx = 0;
   float stopx = 1;
-  float stepsize = .05;
+  float stepsize = (stopx - startx) / n;
 
-  float a=startx;
-  float b=startx+stepsize;
-  float totalArea = 0;
+  float values[n];
+  std::thread *ta = new std::thread[threadCount];
+  // bool flags[threadCount];
 
-  while(b<stopx+stepsize){
-    totalArea+=trapArea(a,b);
-      std::cout << a << " " << b << " " << trapArea(a,b) << std::endl;
-
-    a+=stepsize;
-    b+=stepsize;
+  for (int i = 0; i < n; i++)
+  {
+    ta[i] = std::thread(&trapArea, i, startx, stepsize, &values[i]);
+    // std::cout << a << " " << b << " " << values[i] << std::endl;
   }
 
+  for(int i = 0; i < n; i++)
+  {
+    ta[i].join();
+  }
+
+  float totalArea = 0;
+  totalArea = std::accumulate(values, values + n, totalArea);
   std::cout << totalArea << std::endl;
-
-  // if (argc != 2)
-  // {
-  //   usage(argv[0]);
-  // }
-
-
 }
