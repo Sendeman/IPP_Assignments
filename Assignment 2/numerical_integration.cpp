@@ -84,6 +84,7 @@ int main(int argc, char *argv[])
   totalArea = std::accumulate(values, values + n, totalArea);
   auto end_time = std::chrono::system_clock::now();
   
-  std::cout << "AUC: " << totalArea << std::endl;
-  std::cout << "thread time " << (break_point - start_time).count() << " sum time " << (end_time - break_point).count() << std::endl;
+  std::cout << totalArea << ',' << (break_point - start_time).count() << ',' << (end_time - break_point).count() << std::endl;
+  // std::cout << "AUC: " << totalArea << std::endl;
+  // std::cout << "thread time " << (break_point - start_time).count() << " sum time " << (end_time - break_point).count() << std::endl;
 }
