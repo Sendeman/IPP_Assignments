@@ -1,0 +1,1 @@
+mpiexec --hostfile hosts -n $1 ./$2 $3
